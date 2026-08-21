@@ -1,0 +1,6 @@
+curl -X POST "http://127.0.0.1:8000/process_v1" \
+     -H "Content-Type: application/json" \
+     -d '{
+           "prompt": "Analyze the total number of transactions for this month, identify spending patterns, and summarize the main expense categories.",
+           "context": "[{\"transaction_id\": \"TXN-2026-0801\", \"date\": \"2026-08-03\", \"from_iban\": \"CH93 0023 0230 1234 5678 9\", \"to_iban\": \"CH44 0900 0000 4587 1122 3\", \"recipient_name\": \"Coop Supermarkt Bern\", \"amount\": 142.50, \"currency\": \"CHF\", \"comment\": \"Weekly groceries purchase and household supplies\"}, {\"transaction_id\": \"TXN-2026-0802\", \"date\": \"2026-08-10\", \"from_iban\": \"CH93 0023 0230 1234 5678 9\", \"to_iban\": \"CH12 0078 8000 9988 3344 1\", \"recipient_name\": \"Swisscom AG\", \"amount\": 89.00, \"currency\": \"CHF\", \"comment\": \"Monthly internet and mobile subscription for Hans\"}, {\"transaction_id\": \"TXN-2026-0803\", \"date\": \"2026-08-15\", \"from_iban\": \"CH93 0023 0230 1234 5678 9\", \"to_iban\": \"CH88 0024 4244 5566 7788 9\", \"recipient_name\": \"Dr. Ursula Meier\", \"amount\": 210.00, \"currency\": \"CHF\", \"comment\": \"Medical consultation fee for private checkup\"}]"
+         }'
