@@ -72,19 +72,39 @@ for message in st.session_state.messages:
     with st.chat_message(message["role"]):
         st.markdown(message["content"])
 
-# --- FILE EXPLORER BUTTON ---
-with st.popover("📎 Attach File"):
-    uploaded_file = st.file_uploader("Choose a file from your device")
-    if uploaded_file is not None:
-        st.success(f"Selected: {uploaded_file.name}")
+# --- LOCAL DIRECTORY & MULTI-FILE SELECTION ---
+with st.popover("📁 Select Directory & Files"):
+    local_dir = st.text_input("Enter local directory path")
+    
+    if local_dir:
+        if os.path.exists(local_dir) and os.path.isdir(local_dir):
+            st.success(f"Directory found!")
+            
+            # Get list of files in the directory (ignoring subdirectories)
+            try:
+                all_items = os.listdir(local_dir)
+                files = [item for item in all_items if os.path.isfile(os.path.join(local_dir, item))]
+                
+                if files:
+                    selected_files = st.multiselect("Select files from this directory", files)
+                    if selected_files:
+                        file_paths = [os.path.join(local_dir, f) for f in selected_files]
+                        st.session_state["selected_file_paths"] = file_paths
+                        st.success(f"Selected {len(selected_files)} file(s).")
+                else:
+                    st.warning("No files found in this directory.")
+            except Exception as e:
+                st.error(f"Error reading directory: {e}")
+        else:
+            st.error("Please enter a valid directory path.")
 
 # --- BACKEND FUNCTIONS (from main.py) ---
 def local_ai(document: str):
-    # Local AI extraction stub[cite: 6, 8]
+    # Local AI extraction stub
     return ["Swisscom AG", "Dr. Ursula Meier", "Coop Supermarkt Bern"]
 
 def replace(identifiers, document: str):
-    # Replace items in document[cite: 6, 8]
+    # Replace items in document
     return document, []
 
 # 4. React to user input
