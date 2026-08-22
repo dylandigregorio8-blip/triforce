@@ -55,3 +55,20 @@ def replace(identifiers: list[str], document: str) -> tuple[str, list[tuple[str,
     parts.append(document[last:])
 
     return "".join(parts), mapping
+
+
+def restore(replacements: list[tuple[str, str]], document: str) -> str:
+    """Substitute replacement tags back with their original values in document.
+
+    Args:
+        replacements: List of (original, tag) tuples.
+        document: The document or LLM response containing tags.
+
+    Returns:
+        Document with all replacement tags substituted back to their original values.
+    """
+    sorted_replacements = sorted(replacements, key=lambda item: len(item[1]), reverse=True)
+    result = document
+    for original, tag in sorted_replacements:
+        result = result.replace(tag, original)
+    return result

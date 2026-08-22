@@ -1,3 +1,3 @@
 cd Code
 docker build -t airlock-app .
-docker run --rm -p 8000:8000 --name airlock-container airlock-app
+docker run --rm -p 8000:8000 --env-file .env --name airlock-container airlock-app
