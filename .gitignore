@@ -1,5 +1,8 @@
 **/.obsidian/
 
+# Environment variables
+**/.env
+
 # Python
 **/__pycache__/
 **/.pytest_cache/

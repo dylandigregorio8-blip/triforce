@@ -30,6 +30,7 @@ def test_local_ai_returns_completions(mock_request):
     mock_request.return_value.raise_for_status.assert_called_once()
 
 
+@pytest.mark.skipif(not os.getenv("STONEY_KEY"), reason="STONEY_KEY is not set")
 @patch("local_ai.requests.request")
 def test_local_ai_posts_chat_completion_for_document(mock_request, monkeypatch):
     monkeypatch.setenv("STONEY_KEY", "test-key")
