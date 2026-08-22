@@ -1,6 +1,5 @@
-import requests
 import os
-
+import requests
 
 def local_ai(document1: str) -> list[str]:
     STONEY_KEY = os.getenv("STONEY_KEY")
@@ -13,7 +12,7 @@ def local_ai(document1: str) -> list[str]:
 
     payload = {
         "model": MODEL,
-        "message": [{"role": "user", "content": PROMPT}],
+        "message": [{"role": "user", "content": PROMPT + ": " + document1}],
         "max_tokens": MAX_TOKENS,
 
     }
@@ -21,4 +20,3 @@ def local_ai(document1: str) -> list[str]:
     response = requests.request("POST", url, headers=headers, json=payload)
     response.raise_for_status()
     return response.json()["completions"]
-
