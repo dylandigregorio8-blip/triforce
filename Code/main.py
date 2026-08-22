@@ -1,3 +1,4 @@
+import json
 import os
 from typing import List, Tuple
 from dotenv import load_dotenv
@@ -14,7 +15,7 @@ app = FastAPI(title="Airlock middleware")
 
 class PromptRequest(BaseModel):
     prompt: str  # String with action, expected to be done
-    context: str # String with additional information. 
+    context: str # String with additional information. Should come in format '{"key": "value"}'
 
 def call_gemini(prompt: str, context: str) -> str:
     """Send prompt and redacted context to Gemini LLM."""
@@ -65,6 +66,15 @@ def call_gemini(prompt: str, context: str) -> str:
 
 @app.post("/process_v1")
 async def process_prompt(data: PromptRequest):
+    try:
+        # Validate that context is a valid JSON string
+        parsed_context = json.loads(data.context)
+    except json.JSONDecodeError as e:
+        raise HTTPException(
+            status_code=400, 
+            detail=f"Invalid JSON string inside 'context': {str(e)}"
+        )
+
     document = data.context
 
     regex_identifiers = regex_detector(document)
