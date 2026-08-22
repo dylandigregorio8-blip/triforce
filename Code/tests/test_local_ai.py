@@ -44,7 +44,7 @@ def test_local_ai_posts_chat_completion_for_document(mock_request, monkeypatch):
 
     payload = mock_request.call_args.kwargs["json"]
     assert payload["model"] == "apertus-ai/Apertus-v1.5-8B"
-    assert payload["max_tokens"] == 200
+    assert payload["max_tokens"] == 2000
     assert payload["messages"] == [{"role": "system", "content": PROMPT},
                                    {"role": "user", "content": "Here is the text: secret doc"}]
     print(PROMPT)

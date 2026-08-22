@@ -1,5 +1,5 @@
 from regex_detector import regex_detector
-from replace import replace
+from replace import replace, restore
 
 
 def test_empty_document_and_no_identifiers():
@@ -56,3 +56,19 @@ def test_replace_uses_regex_detector_matches(load_document):
     for original, tag in mapping:
         assert original not in redacted
         assert tag in redacted
+
+
+def test_restore_replaces_tags_back_to_original():
+    mapping = [("2024-08-21", "<ID_1>"), ("ada@example.com", "<ID_2>")]
+    llm_output = "The event on <ID_1> was organized by <ID_2>."
+    restored = restore(mapping, llm_output)
+    assert restored == "The event on 2024-08-21 was organized by ada@example.com."
+
+
+def test_restore_roundtrip_with_replace():
+    document = "Contact Dr. Ursula Meier at ursula@example.com on 2024-08-21."
+    identifiers = ["Dr. Ursula Meier", "ursula@example.com", "2024-08-21"]
+    redacted, mapping = replace(identifiers, document)
+    restored = restore(mapping, redacted)
+    assert restored == document
+
