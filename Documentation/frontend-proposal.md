@@ -1,0 +1,4 @@
+- Use Obsidian as document presentation
+- Create UI with textbox for a prompt.
+- Create dropdown for document selection.
+- API connection to the backend is defined in main.py.
