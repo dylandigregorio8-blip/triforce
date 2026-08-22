@@ -1,0 +1,2 @@
+Contact ada@example.com or first.last+tag@sub.domain.org.
+Not an email: user@, @domain.com, plain text.

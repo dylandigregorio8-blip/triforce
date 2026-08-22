@@ -1,0 +1,8 @@
+**/.obsidian/
+
+# Python
+**/__pycache__/
+**/.pytest_cache/
+
+# IDEs
+**/.vscode/
