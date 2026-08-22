@@ -8,7 +8,10 @@ def local_ai(document1: str) -> list[str]:
     MAX_TOKENS = 100
 
     url = 'https://llm.stoney-cloud.com/v1/chat/completions'
-    headers = {"Authorization: Bearer $STONEY_KEY", "Content-Type: application/json"}
+    headers = {
+        "Authorization": f"Bearer {STONEY_KEY}",
+        "Content-Type": "application/json",
+    }
 
     payload = {
         "model": MODEL,
