@@ -24,5 +24,13 @@ def test_overlapping_matches_are_reported_once():
 
 
 def test_config_covers_required_categories():
-    assert set(REGEX_CONFIG) == {"date", "emails", "accounts", "phone_numbers"}
+    assert set(REGEX_CONFIG) == {
+        "date",
+        "emails",
+        "accounts",
+        "transaction_ids",
+        "phone_numbers",
+        "national_ids",
+    }
     assert all(REGEX_CONFIG[category] for category in REGEX_CONFIG)
+

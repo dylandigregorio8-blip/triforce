@@ -21,8 +21,18 @@ REGEX_CONFIG: dict[str, list[str]] = {
         r"\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}\b",
     ],
     "accounts": [
+        # IBAN with optional spaces (e.g., CH93 0023 0230 1234 5678 9)
+        r"\b[A-Z]{2}\d{2}(?:\s?[A-Z0-9]{4}){3,7}\s?[A-Z0-9]{1,4}\b",
+        # Standard continuous IBAN
         r"\b[A-Z]{2}\d{2}[A-Z0-9]{11,30}\b",
+        # Credit cards / account numbers
         r"\b(?:\d{4}[-\s]?){3}\d{4}\b",
+    ],
+    "transaction_ids": [
+        # Transaction IDs like TXN-2026-0801
+        # r"\b(?:TXN|REF|ID|INV|ORD)[-:][A-Z0-9-]+\b",
+        # UUIDs
+        r"\b[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}\b",
     ],
     "phone_numbers": [
         # International E.164-style: +country then national number, optional grouping
@@ -32,8 +42,13 @@ REGEX_CONFIG: dict[str, list[str]] = {
         r"\b\d{3}[-.\s]\d{3}[-.\s]\d{4}\b",
         r"\(\d{3}\)\s*\d{3}[-.\s]?\d{4}",
     ],
+    "national_ids": [
+        # Swiss AHV/AVS (756.XXXX.XXXX.XX)
+        r"\b756\.\d{4}\.\d{4}\.\d{2}\b",
+        # US SSN
+        r"\b\d{3}-\d{2}-\d{4}\b",
+    ],
 }
-
 _COMPILED: list[tuple[str, Pattern[str]]] = [
     (category, re.compile(pattern, re.IGNORECASE))
     for category, patterns in REGEX_CONFIG.items()
