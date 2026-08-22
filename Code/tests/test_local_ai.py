@@ -3,7 +3,6 @@ from unittest.mock import MagicMock, patch
 
 import pytest
 import requests
-
 from local_ai import local_ai
 
 
@@ -53,6 +52,6 @@ def test_local_ai_raises_when_http_fails(mock_request):
 def test_local_ai_live_call_with_stoney_key():
     result = local_ai("hello")
 
-    assert isinstance(result, list)
+    assert isinstance(result, dict)
     assert result
     assert all(isinstance(item, str) for item in result)
