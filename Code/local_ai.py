@@ -1,5 +1,6 @@
 import os
 import requests
+import json
 
 def local_ai(document1: str) -> list[str]:
     STONEY_KEY = os.getenv("STONEY_KEY")
@@ -22,4 +23,5 @@ def local_ai(document1: str) -> list[str]:
 
     response = requests.request("POST", url, headers=headers, json=payload)
     response.raise_for_status()
-    return response.json()
+
+    return json.loads(response.json()["choices"][0]["message"]["content"])
