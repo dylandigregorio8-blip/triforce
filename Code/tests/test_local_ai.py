@@ -55,3 +55,15 @@ def test_local_ai_live_call_with_stoney_key():
     assert isinstance(result, dict)
     assert result
     assert all(isinstance(item, str) for item in result)
+
+
+@pytest.mark.skipif(not os.getenv("STONEY_KEY"), reason="STONEY_KEY is not set")
+def test_local_ai_live_call_with_stoney_key():
+    result = local_ai("Please be advised that the confidential profile for patient Jane Doe (Date of Birth: 05/12/1988, SSN: XXX-45-6789) has been updated. Her primary residence is listed as 1234 Main Street, Apt 4B, Springfield, OR 97477, and she can be reached at (555) 019-2831 or via email at jane.doe@example.com. The recent charge of $1,450.00 for her treatment plan was billed to her Visa card ending in 4321 (Expiration: 08/26, CVV: 891). Her confidential medical record indicates a diagnosis of Type 1 Diabetes, and her patient portal login username is jdoe_med88 with the temporary access pin 9021#4.")
+
+    assert (result["choices"][0]["message"]["content"], str)
+    print (str(result["choices"][0]["message"]["content"]))
+
+    assert isinstance(result, dict)
+    assert result
+    assert all(isinstance(item, str) for item in result)
